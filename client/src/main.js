@@ -1,24 +1,42 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+console.log("My project");
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+async function getProducts() {
+  console.log("I am getProducts, and I am about to fetch some data");
+  const response = await fetch(
+    "https://week8project-server.onrender.com/products"
+  );
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+  console.log(
+    "I am getProducts, and I'm about to give the data to renderDataOntoPage()"
+  );
+  renderDataOntoPage(data);
+  function renderDataOntoPage(apiResults) {}
+  console.log(
+    "I am renderDataOntoPage, and I am about to loop through the array"
+  );
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
 
-setupCounter(document.querySelector('#counter'))
+  for (let index = 0; index < apiResults.length; index++) {
+    const element = apiResults[index];
+    console.log(element);
+
+    const newName = document.createElement("h2");
+    const newCatagory = document.createElement("p");
+
+    newName.textContent = element.name;
+    newCatagory.textContent = element.Catagory;
+
+    resultsDiv.appendChild(newName);
+    resultsDiv.appendChild(newCatagory);
+    resultsDiv.append(newName, newCatagory);
+
+    const postsBtn = document.getElementById("get-products-button");
+    postsBtn.addEventListener("click", function () {
+      console.log("I am about to call getProducts()");
+      getProducts();
+    });
+  }
+}
