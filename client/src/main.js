@@ -1,5 +1,9 @@
 console.log("My project");
-
+const postsBtn = document.getElementById("get-products-button");
+postsBtn.addEventListener("click", function () {
+  console.log("I am about to call getProducts()");
+  getProducts();
+});
 async function getProducts() {
   console.log("I am getProducts, and I am about to fetch some data");
   const response = await fetch(
@@ -12,10 +16,12 @@ async function getProducts() {
     "I am getProducts, and I'm about to give the data to renderDataOntoPage()"
   );
   renderDataOntoPage(data);
-  function renderDataOntoPage(apiResults) {}
+}
+function renderDataOntoPage(apiResults) {
   console.log(
     "I am renderDataOntoPage, and I am about to loop through the array"
   );
+
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
@@ -32,11 +38,5 @@ async function getProducts() {
     resultsDiv.appendChild(newName);
     resultsDiv.appendChild(newCatagory);
     resultsDiv.append(newName, newCatagory);
-
-    const postsBtn = document.getElementById("get-products-button");
-    postsBtn.addEventListener("click", function () {
-      console.log("I am about to call getProducts()");
-      getProducts();
-    });
   }
 }
